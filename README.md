@@ -3,7 +3,15 @@
 
 <b>Features:</b><br>
 - Everything is inside of a single C file.  Nothing complicated about it.<br>
-- Specific functions for video, audio, and buttons making it easy to change to your specific need.<br>
+- Specific functions for video, audio, and buttons making it easy to change to your specific needs.<br>
 - Uses OpenGL/GLFW and OpenAL for video, keyboard, and audio for an open platform to start from.<br>
-- 
+- Works with most games, including mappers: NROM, UNROM, CNROM, ANROM, MMC1, and MMC3 (mostly implemented).<br>
+- Very fast!  Runs games on a PIC32MZ microcontroller at 45 FPS with only a few exceptions.<br>
+- Public domain, free for all to use!<br>
+
+<b>Known Issues:</b><br>
+- Megaman 3 and Megaman 4 will not start unless the V-Sync Hack is turned on, but it can then be turned off later.<br>
+- Super Mario 3 sprite priority is wrong, the Sprite Priority Hack helps a little bit.<br>
+
+
 
