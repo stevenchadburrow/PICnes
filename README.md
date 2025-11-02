@@ -14,13 +14,13 @@
 - Super Mario Bros 3 sprite priority is wrong, the Sprite Priority Hack helps a little bit.<br>
 
 <b>Images:</b><br>
-<img src="Images/PICnesImages-SuperMarioBros.png"><br>
+<img src="Images/PICnesImages-SuperMarioBros.png">
 <img src="Images/PICnesImages-SuperMarioBros3.png"><br>
-<img src="Images/PICnesImages-LegendOfZelda.png"><br>
+<img src="Images/PICnesImages-LegendOfZelda.png">
 <img src="Images/PICnesImages-KirbysAdventure.png"><br>
-<img src="Images/PICnesImages-Metroid.png"><br>
+<img src="Images/PICnesImages-Metroid.png">
 <img src="Images/PICnesImages-RadRacer.png"><br>
-<img src="Images/PICnesImages-MicroMages.png"><br>
+<img src="Images/PICnesImages-MicroMages.png">
 <img src="Images/PICnesImages-AlwasAwakening.png"><br>
 
 
