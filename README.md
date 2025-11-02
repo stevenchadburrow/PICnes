@@ -11,7 +11,7 @@
 
 <b>Known Issues:</b><br>
 - Megaman 3, Megaman 4, and Ninja Gaiden 2 will not start unless the V-Sync Hack is turned on, but it can then be turned off later.<br>
-- Super Mario 3 sprite priority is wrong, the Sprite Priority Hack helps a little bit.<br>
+- Super Mario Bros 3 sprite priority is wrong, the Sprite Priority Hack helps a little bit.<br>
 
 
 
