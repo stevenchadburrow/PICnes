@@ -17,12 +17,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//#include <fcntl.h>
-//#include <unistd.h>
-//#include <sys/ioctl.h>
-//#include <sys/soundcard.h>
-//#include <time.h>
-
 // uses OpenGL for graphics and keyboard
 #include <GLFW/glfw3.h>
 #include <GL/gl.h>
@@ -1094,19 +1088,6 @@ unsigned char nes_audio_open()
 	alSource3f(openal_source, AL_VELOCITY, 0, 0, 0);
 	alSourcei(openal_source, AL_LOOPING, AL_FALSE);
 
-	//int sound_fragment = 0x0004000A; // 4 blocks, each is 2^A = 2^10 = 1024
-	//int sound_stereo = 0;
-	//int sound_format = AFMT_S8; // AFMT_U8;
-	//int sound_speed = (unsigned int)((61542)/2); // calculations: 61542 = 1024 * 60.0988 + 1
-
-	// if /dev/dsp does not show, you must use: sudo modprobe snd-pcm-oss
-	//audio_file = open("/dev/dsp", O_WRONLY);
-
-	//ioctl(audio_file, SNDCTL_DSP_SETFRAGMENT, &sound_fragment); // needed to stop the drift
-	//ioctl(audio_file, SNDCTL_DSP_STEREO, &sound_stereo);
-	//ioctl(audio_file, SNDCTL_DSP_SETFMT, &sound_format);
-	//ioctl(audio_file, SNDCTL_DSP_SPEED, &sound_speed);
-
 	return 1;
 }
 
@@ -1127,11 +1108,9 @@ void nes_audio_play()
 	for (int i=0; i<1024; i++) openal_data[i] = audio_buffer[i];
 
 	alGenBuffers(1, &openal_buffer);
-	alBufferData(openal_buffer, AL_FORMAT_MONO8, openal_data, 1024, 61542);
+	alBufferData(openal_buffer, AL_FORMAT_MONO8, openal_data, 1024, 61542); // calculations: 61542 = 1024 * 60.0988 + 1
 	alSourcei(openal_source, AL_BUFFER, openal_buffer);
 	alSourcePlay(openal_source);
-
-	//write(audio_file, &audio_buffer, 1024); // AUDIO_SAMPLES
 	
 	for (int i=0; i<AUDIO_LEN; i++)
 	{
