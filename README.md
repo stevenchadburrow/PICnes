@@ -14,6 +14,11 @@
 - Super Mario Bros 3 sprite priority is wrong, the Sprite Priority Hack helps a little bit.<br>
 - Audio quality from OpenAL is terrible, but it is at least proof-of-concept to port to other platforms.<br>
 
+<b>Links:</b><br>
+- For the first version of this emulator, and large list of working ROMs, go here: <a href="https://github.com/stevenchadburrow/AcolyteHandPICd32/tree/main/NES">AcolyteHandPICd32/NES</a>.<br>
+- For my last PIC32MZ microcontroller project that uses this emulator, go here: <a href="https://github.com/stevenchadburrow/AcolyteHandheld">AcolyteHandheld</a>.<br>
+- For my Raspberry Pi Zero 2W project that uses this emulator, go here: <a href="https://github.com/stevenchadburrow/RPi02W-Emulators">RPi02W-Emulators</a>.<br>
+
 <b>Images:</b><br>
 <table>
 <tr><td><img src="Images/PICnesImages-SuperMarioBros.png"></td>
