@@ -13,7 +13,8 @@ Inspired by Mahyar Koshkouei's <a href="https://github.com/deltabeard/Peanut-GB"
 - Public domain, free for all to use!<br>
 
 <b>Known Issues:</b><br>
-- Megaman 3, Megaman 4, and Ninja Gaiden 2 will not start unless the V-Sync Hack is turned on, but it can then be turned off later.<br>
+- Megaman 3, Megaman 4, and Ninja Gaiden 2 will not start unless the MMC3 IRQ Timing is adjusted.<br>
+- Pro Wrestling will not start unless the V-Sync Hack is turned on.<br>
 - Super Mario Bros 3 sprite priority is wrong, the Sprite Priority Hack helps a little bit.<br>
 - Audio quality from OpenAL is terrible, but it is at least proof-of-concept to port to other platforms.<br>
 
