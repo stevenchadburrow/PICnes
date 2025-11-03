@@ -1,6 +1,8 @@
 # PICnes
 <b>A fast NES Emulator written in C specifically for microcontrollers.</b><br>
 
+Inspired by Mahyar Koshkouei's <a href="https://github.com/deltabeard/Peanut-GB">Peanut-GB (with MiniGB-APU)</a>, I designed my own NES emulator compariable to his Gameboy emulator.  This project is the result of a few months of very dedicated programming, then small updates and changes when necessary.  The goal of PICnes was to run on the PIC32MZ microcontroller at 260 MHz with only 512KB of RAM and 2MB of ROM.<br>
+
 <b>Features:</b><br>
 - Everything is inside of a single C file.  Nothing complicated about it.  Easy to port!<br>
 - Specific functions for video, audio, and buttons making it easy to change to your specific needs.<br>
