@@ -7,7 +7,7 @@
 // Will probably require some packages for OpenGL, GLFW, and OpenAL.
 
 // PICnes
-// Fast NES Emulator designed for Microcontrollers
+// A fast NES Emulator designed for Microcontrollers
 // Using OpenGL/GLFW for Video and Keyboard, and OpenAL for Audio
 // Creator: Professor Steven Chad Burrow
 // Email: stevenchadburrow@gmail.com
@@ -5692,7 +5692,7 @@ void handleResize(GLFWwindow *window, int width, int height)
 int main(const int argc, const char **argv)
 {
 	printf("PICnes\n");
-	printf("Fast NES Emulator designed for Microcontrollers\n");
+	printf("A fast NES Emulator designed for Microcontrollers\n");
 	printf("Using OpenGL/GLFW for Video and Keyboard, and OpenAL for Audio\n");
 	printf("Creator: Professor Steven Chad Burrow\n");
 	printf("Email: stevenchadburrow@gmail.com\n");
