@@ -1061,6 +1061,11 @@ void nes_buttons()
 			ctl_value_2 = (ctl_value_2 & 0xFD);
 		}
 	}
+
+	if (opengl_keyboard_state[GLFW_KEY_1] == 1) nes_ram_save("RAM-SAVE-FILE.SAV");
+	if (opengl_keyboard_state[GLFW_KEY_2] == 1) { nes_ram_load("RAM-SAVE-FILE.SAV"); nes_reset_flag = 0; nes_init(); }
+	if (opengl_keyboard_state[GLFW_KEY_3] == 1) nes_state_save("STATE-SAVE-FILE.SAV");
+	if (opengl_keyboard_state[GLFW_KEY_4] == 1) nes_state_load("STATE-SAVE-FILE.SAV");
 }
 
 // using OpenAL
