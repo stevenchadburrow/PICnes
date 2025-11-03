@@ -9,6 +9,7 @@ Inspired by Mahyar Koshkouei's <a href="https://github.com/deltabeard/Peanut-GB"
 - Uses OpenGL/GLFW and OpenAL for video, keyboard, and audio for an open platform to start from.<br>
 - Works with most games, including mappers: NROM, UNROM, CNROM, ANROM, MMC1, and MMC3 (mostly implemented).<br>
 - Very fast!  Runs games on a PIC32MZ microcontroller at 45 FPS with only a few exceptions.<br>
+- Built-in RAM save/load functions, save-states, turbo buttons, and fast-forward.  Up to four players are possible.<br>
 - Public domain, free for all to use!<br>
 
 <b>Known Issues:</b><br>
