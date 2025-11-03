@@ -5805,22 +5805,22 @@ int main(const int argc, const char **argv)
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 
-			if (opengl_keyboard_state[GLFW_KEY_R] == 1 && opengl_keyboard_state[GLFW_KEY_1] == 1) nes_ram_save("RAM-SAVE-FILE-1.SAV");
-			if (opengl_keyboard_state[GLFW_KEY_R] == 1 && opengl_keyboard_state[GLFW_KEY_2] == 1) nes_ram_save("RAM-SAVE-FILE-2.SAV");
-			if (opengl_keyboard_state[GLFW_KEY_R] == 1 && opengl_keyboard_state[GLFW_KEY_3] == 1) nes_state_save("STATE-SAVE-FILE-3.SAV");
-			if (opengl_keyboard_state[GLFW_KEY_R] == 1 && opengl_keyboard_state[GLFW_KEY_4] == 1) nes_state_save("STATE-SAVE-FILE-4.SAV");
+			if (opengl_keyboard_state[GLFW_KEY_F] == 1 && opengl_keyboard_state[GLFW_KEY_1] == 1) nes_ram_save("RAM-SAVE-FILE-1.SAV");
+			if (opengl_keyboard_state[GLFW_KEY_F] == 1 && opengl_keyboard_state[GLFW_KEY_2] == 1) nes_ram_save("RAM-SAVE-FILE-2.SAV");
+			if (opengl_keyboard_state[GLFW_KEY_F] == 1 && opengl_keyboard_state[GLFW_KEY_3] == 1) nes_state_save("STATE-SAVE-FILE-3.SAV");
+			if (opengl_keyboard_state[GLFW_KEY_F] == 1 && opengl_keyboard_state[GLFW_KEY_4] == 1) nes_state_save("STATE-SAVE-FILE-4.SAV");
 			if (opengl_keyboard_state[GLFW_KEY_L] == 1 && opengl_keyboard_state[GLFW_KEY_1] == 1) { nes_ram_load("RAM-SAVE-FILE-1.SAV"); nes_reset_flag = 0; nes_init(); }
 			if (opengl_keyboard_state[GLFW_KEY_L] == 1 && opengl_keyboard_state[GLFW_KEY_2] == 1) { nes_ram_load("RAM-SAVE-FILE-2.SAV"); nes_reset_flag = 0; nes_init(); }
 			if (opengl_keyboard_state[GLFW_KEY_L] == 1 && opengl_keyboard_state[GLFW_KEY_3] == 1) nes_state_load("STATE-SAVE-FILE-3.SAV");
 			if (opengl_keyboard_state[GLFW_KEY_L] == 1 && opengl_keyboard_state[GLFW_KEY_4] == 1) nes_state_load("STATE-SAVE-FILE-4.SAV");
 
-			if (opengl_keyboard_state[GLFW_KEY_V] == 1 && opengl_keyboard_state[GLFW_KEY_MINUS] == 1) nes_hack_vsync_flag = 0;
-			if (opengl_keyboard_state[GLFW_KEY_V] == 1 && opengl_keyboard_state[GLFW_KEY_EQUAL] == 1) nes_hack_vsync_flag = 1;
-			if (opengl_keyboard_state[GLFW_KEY_P] == 1 && opengl_keyboard_state[GLFW_KEY_MINUS] == 1) nes_hack_sprite_priority = 0;
-			if (opengl_keyboard_state[GLFW_KEY_P] == 1 && opengl_keyboard_state[GLFW_KEY_EQUAL] == 1) nes_hack_sprite_priority = 1;
-			if (opengl_keyboard_state[GLFW_KEY_M] == 1 && opengl_keyboard_state[GLFW_KEY_0] == 1) { map_mmc3_irq_delay = 0x0000; map_mmc3_irq_shift = 0x0000; }
-			if (opengl_keyboard_state[GLFW_KEY_M] == 1 && opengl_keyboard_state[GLFW_KEY_MINUS] == 1) { map_mmc3_irq_delay = 0x0010; map_mmc3_irq_shift = 0x0001; }
-			if (opengl_keyboard_state[GLFW_KEY_M] == 1 && opengl_keyboard_state[GLFW_KEY_EQUAL] == 1) { map_mmc3_irq_delay = 0x0028; map_mmc3_irq_shift = 0x0003; }
+			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_1] == 1) nes_hack_vsync_flag = 0;
+			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_2] == 1) nes_hack_vsync_flag = 1;
+			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_3] == 1) nes_hack_sprite_priority = 0;
+			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_4] == 1) nes_hack_sprite_priority = 1;
+			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_5] == 1) { map_mmc3_irq_delay = 0x0000; map_mmc3_irq_shift = 0x0000; }
+			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_6] == 1) { map_mmc3_irq_delay = 0x0010; map_mmc3_irq_shift = 0x0001; }
+			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_7] == 1) { map_mmc3_irq_delay = 0x0028; map_mmc3_irq_shift = 0x0003; }
 		}
 	}
 
