@@ -16,6 +16,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // uses OpenGL for graphics and keyboard
 #include <GLFW/glfw3.h>
@@ -153,8 +154,8 @@ unsigned long map_mmc3_irq_previous = 0x0000;
 unsigned long map_mmc3_irq_interrupt = 0x0000;
 unsigned long map_mmc3_irq_reload = 0x0000;
 unsigned long map_mmc3_irq_a12 = 0x0000;
-unsigned long map_mmc3_irq_delay = 0x0010; // 0x0010 or 0x0028 // play with these values
-unsigned long map_mmc3_irq_shift = 0x0001; // 0x0001 or 0x0003 // play with these values
+unsigned long map_mmc3_irq_delay = 0x0010; // 0x0000 or 0x0010 or 0x0028 // play with these values
+unsigned long map_mmc3_irq_shift = 0x0001; // 0x0000 or 0x0001 or 0x0003 // play with these values
 
 unsigned long cpu_reg_a = 0x0000, cpu_reg_x = 0x0000, cpu_reg_y = 0x0000, cpu_reg_s = 0x00FD;
 unsigned long cpu_flag_c = 0x0000, cpu_flag_z = 0x0000, cpu_flag_v = 0x0000, cpu_flag_n = 0x0000;
@@ -1061,11 +1062,6 @@ void nes_buttons()
 			ctl_value_2 = (ctl_value_2 & 0xFD);
 		}
 	}
-
-	if (opengl_keyboard_state[GLFW_KEY_1] == 1) nes_ram_save("RAM-SAVE-FILE.SAV");
-	if (opengl_keyboard_state[GLFW_KEY_2] == 1) { nes_ram_load("RAM-SAVE-FILE.SAV"); nes_reset_flag = 0; nes_init(); }
-	if (opengl_keyboard_state[GLFW_KEY_3] == 1) nes_state_save("STATE-SAVE-FILE.SAV");
-	if (opengl_keyboard_state[GLFW_KEY_4] == 1) nes_state_load("STATE-SAVE-FILE.SAV");
 }
 
 // using OpenAL
@@ -5712,9 +5708,16 @@ int main(const int argc, const char **argv)
 
 	if (argc < 2)
 	{
-		printf("Arguments: <ROM file>\n");
+		printf("Arguments: <ROM file> <hack?>\n");
 	
 		return 0;
+	}
+
+	// initial hack for Megaman 3 and Megaman 4
+	if (argc >= 3)
+	{
+		map_mmc3_irq_delay = 0x0000; 
+		map_mmc3_irq_shift = 0x0000;
 	}
 
 	FILE *input = NULL;
@@ -5801,6 +5804,18 @@ int main(const int argc, const char **argv)
 			glfwSwapInterval(0); // turn off v-sync
 			glfwSwapBuffers(window);
 			glfwPollEvents();
+
+			if (opengl_keyboard_state[GLFW_KEY_1] == 1) nes_ram_save("RAM-SAVE-FILE.SAV");
+			if (opengl_keyboard_state[GLFW_KEY_2] == 1) { nes_ram_load("RAM-SAVE-FILE.SAV"); nes_reset_flag = 0; nes_init(); }
+			if (opengl_keyboard_state[GLFW_KEY_3] == 1) nes_state_save("STATE-SAVE-FILE.SAV");
+			if (opengl_keyboard_state[GLFW_KEY_4] == 1) nes_state_load("STATE-SAVE-FILE.SAV");
+
+			if (opengl_keyboard_state[GLFW_KEY_V] == 1 && opengl_keyboard_state[GLFW_KEY_MINUS] == 1) nes_hack_vsync_flag = 0;
+			if (opengl_keyboard_state[GLFW_KEY_V] == 1 && opengl_keyboard_state[GLFW_KEY_EQUAL] == 1) nes_hack_vsync_flag = 1;
+			if (opengl_keyboard_state[GLFW_KEY_P] == 1 && opengl_keyboard_state[GLFW_KEY_MINUS] == 1) nes_hack_sprite_priority = 0;
+			if (opengl_keyboard_state[GLFW_KEY_P] == 1 && opengl_keyboard_state[GLFW_KEY_EQUAL] == 1) nes_hack_sprite_priority = 1;
+			if (opengl_keyboard_state[GLFW_KEY_M] == 1 && opengl_keyboard_state[GLFW_KEY_MINUS] == 1) { map_mmc3_irq_delay = 0x0010; map_mmc3_irq_shift = 0x0001; }
+			if (opengl_keyboard_state[GLFW_KEY_M] == 1 && opengl_keyboard_state[GLFW_KEY_EQUAL] == 1) { map_mmc3_irq_delay = 0x0028; map_mmc3_irq_shift = 0x0003; }
 		}
 	}
 
