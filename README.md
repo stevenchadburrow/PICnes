@@ -20,6 +20,7 @@ Inspired by Mahyar Koshkouei's <a href="https://github.com/deltabeard/Peanut-GB"
 - For the first version of this emulator, and large list of working ROMs, go here: <a href="https://github.com/stevenchadburrow/AcolyteHandPICd32/tree/main/NES">AcolyteHandPICd32/NES</a>.<br>
 - For my last PIC32MZ microcontroller project that uses this emulator, go here: <a href="https://github.com/stevenchadburrow/AcolyteHandheld">AcolyteHandheld</a>.<br>
 - For my Raspberry Pi Zero 2W project that uses this emulator, go here: <a href="https://github.com/stevenchadburrow/RPi02W-Emulators">RPi02W-Emulators</a>.<br>
+- For the #1 guide to NES programming, go here: <a href="https://www.nesdev.org/wiki/Nesdev_Wiki">NESdev Wiki</a>.<br>
 
 <b>Images:</b><br>
 <table>
