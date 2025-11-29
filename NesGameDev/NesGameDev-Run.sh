@@ -1,5 +1,4 @@
-./dev65/bin/as65 NesGameDev-ProgramROM.asm ;
-./NesGameDev-Parser.o NesGameDev-ProgramROM.lst NesGameDev-ProgramROM.bin 32768 0 32768 0 ;
+./asm6/asm6.o NesGameDev-Code.asm NesGameDev-ProgramROM.bin ;
 ./NesGameDev-Converter.o NesGameDev-PatternTable0.bmp NesGameDev-PatternTable1.bmp NesGameDev-CharacterROM.bin ;
 ./NesGameDev-Combiner.o NesGameDev-ProgramROM.bin NesGameDev-CharacterROM.bin GAME.NES ;
 ./PICnes.o GAME.NES ;
