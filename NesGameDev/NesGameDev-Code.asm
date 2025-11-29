@@ -168,9 +168,8 @@ loop_background
 	LDA #$00
 	STA vblank_ready
 
-inf
-	
 ; wait for v-blank flag to be set
+inf
 	LDA vblank_ready
 	BEQ inf
 
@@ -234,6 +233,7 @@ sprite
 	LDA #$02
 	STA oam_dma
 
+; jump back to loop
 	JMP inf
 
 
