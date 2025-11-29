@@ -19,8 +19,6 @@
 ; ./PICnes.o GAME.NES
 
 
-;	.65C02
-
 ; variables
 
 vblank_ready .EQU $00 ; used for detecting if v-sync has occured
