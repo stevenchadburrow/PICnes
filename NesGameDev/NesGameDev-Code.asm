@@ -179,6 +179,21 @@ inf
 	LDA #$00
 	STA vblank_ready
 
+; redraw sprite 0
+sprite
+	LDA sprite_y ; y-coord
+	STA oam_page+0
+	LDA #$00 ; use tile 0
+	STA oam_page+1
+	LDA #$00 ; use palette 4
+	STA oam_page+2
+	LDA sprite_x ; x-coord
+	STA oam_page+3
+
+; oam/sprite dma
+	LDA #$02
+	STA oam_dma
+
 ; clear w reg
 	LDA ppu_status
 
@@ -230,20 +245,6 @@ skip_down
 	DEC sprite_y ; go up
 skip_up
 
-; redraw sprite 0
-sprite
-	LDA sprite_y ; y-coord
-	STA oam_page+0
-	LDA #$00 ; use tile 0
-	STA oam_page+1
-	LDA #$00 ; use palette 4
-	STA oam_page+2
-	LDA sprite_x ; x-coord
-	STA oam_page+3
-
-; oam/sprite dma
-	LDA #$02
-	STA oam_dma
 
 ; jump back to loop
 	JMP inf
