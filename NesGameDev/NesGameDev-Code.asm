@@ -152,6 +152,10 @@ loop_background
 	STA sprite_x
 	STA sprite_y
 
+; enable sprites and background
+	LDA #$1E ; enable sprites and background
+	STA ppu_mask
+
 ; clear w reg
 	LDA ppu_status
 
@@ -161,8 +165,6 @@ loop_background
 	STA ppu_scroll
 	LDA #$90 ; turn on nmi, sprites uses $0000, background uses $1000
 	STA ppu_ctrl
-	LDA #$1E ; enable sprites and background
-	STA ppu_mask
 
 ; clear v-blank flag
 	LDA #$00
@@ -176,6 +178,16 @@ inf
 ; clear v-blank flag
 	LDA #$00
 	STA vblank_ready
+
+; clear w reg
+	LDA ppu_status
+
+; setup ppu
+	LDA #$00 ; top-left corner is at $0000
+	STA ppu_scroll
+	STA ppu_scroll
+	LDA #$90 ; turn on nmi, sprites uses $0000, background uses $1000
+	STA ppu_ctrl
 
 ; latch controller
 	LDA #$01
