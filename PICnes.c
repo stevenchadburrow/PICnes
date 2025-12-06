@@ -313,7 +313,8 @@ volatile unsigned short apu_period[16] = {
 
 void nes_error(unsigned char code)
 {			
-	printf("NES Error %02X\n", code);
+	printf("NES Error %02X, A=%02X, X=%02X, Y=%02X\n", code, 
+		(unsigned int)cpu_reg_a, (unsigned int)cpu_reg_x, (unsigned int)cpu_reg_y);
 }
 
 unsigned char nes_ram_save(char *filename)
@@ -5711,6 +5712,24 @@ int main(const int argc, const char **argv)
 		printf("Arguments: <ROM file> <hack?>\n");
 	
 		return 0;
+	}
+
+	unsigned char randomizer = 0;
+
+	for (unsigned long i=0; i<(unsigned long)(time(0) % 1000); i++)
+	{
+		randomizer = (unsigned char)(rand() % 256);
+	}
+
+	for (int i=0; i<8192; i++)
+	{
+		sys_ram[i] = (unsigned char)(rand() % 256);
+	}
+
+	for (int i=0; i<32768; i++)
+	{
+		cart_ram[i] = (unsigned char)(rand() % 256);
+		ext_ram[i] = (unsigned char)(rand() % 256);
 	}
 
 	// initial hack for Megaman 3 and Megaman 4
