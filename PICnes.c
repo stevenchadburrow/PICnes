@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 // uses OpenGL for graphics and keyboard
 #include <GLFW/glfw3.h>
 #include <GL/gl.h>
@@ -305,7 +306,7 @@ volatile unsigned short apu_period[16] = {
 
 void nes_error(unsigned char code)
 {			
-	printf("NES Error %02X, A=%02X, X=%02X, Y=%02X\n", code, 
+	printf("NES Error %02X, PC=%04X, A=%02X, X=%02X, Y=%02X\n", code, (unsigned int)cpu_reg_pc,
 		(unsigned int)cpu_reg_a, (unsigned int)cpu_reg_x, (unsigned int)cpu_reg_y);
 }
 
@@ -1538,12 +1539,13 @@ unsigned char cpu_read(unsigned long addr)
 			{
 				unsigned char val = ((apu_flag_i << 7) |
 					(apu_flag_f << 6) |
-					(apu_flag_d << 4) |
-					(apu_flag_n << 3) |
-					(apu_flag_t << 2) |
-					(apu_flag_2 << 1) |
-					(apu_flag_1));
+					(apu_flag_d << 4));
 
+				if (apu_noise_l > 0) val = (val | 0x08);
+				if (apu_triangle_l > 0) val = (val | 0x04);
+				if (apu_pulse_2_l > 0) val = (val | 0x02);
+				if (apu_pulse_1_l > 0) val = (val | 0x01);
+			
 				apu_flag_f = 0x0000;
 				
 				return val;
