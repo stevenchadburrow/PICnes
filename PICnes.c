@@ -3718,7 +3718,7 @@ void nes_background(unsigned long tile, unsigned long line)
 					}
 					else if (pixel_x >= 0 && pixel_x < 8)
 					{
-						nes_pixel_raw(pixel_x, pixel_y, nes_palette[0x0F]); // black
+						nes_pixel_pal(pixel_x, pixel_y, pal_ram[0x10]); // background
 					}
 				}
 				else if (nes_border_method == 0)
@@ -3738,7 +3738,7 @@ void nes_background(unsigned long tile, unsigned long line)
 					}
 					else if (pixel_x >= 0 && pixel_x < 8)
 					{
-						nes_pixel_raw(pixel_x, pixel_y, nes_palette[0x0F]); // black
+						nes_pixel_pal(pixel_x, pixel_y, pal_ram[0x10]); // background
 					}
 				}
 
