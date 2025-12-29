@@ -37,6 +37,7 @@ ALCcontext *openal_context;
 ALuint openal_source;
 ALuint openal_buffer;
 unsigned char openal_data[1024];
+unsigned char openal_enable = 1;
 
 // below is the PICnes specific stuff
 unsigned char speed_limiter = 1;
@@ -86,6 +87,7 @@ unsigned long nes_hack_vsync_flag = 0; // change this accordingly
 unsigned long nes_hack_sprite_priority = 0; // change this accordingly
 
 unsigned long nes_border_shrink = 0; // 0 through 3 really
+unsigned long nes_border_method = 1; // 0 means draw in background function, 1 means draw in separate function
 
 unsigned long nes_loop_option = 0; // 0 through 4 really
 unsigned long nes_loop_max = 0;
@@ -1100,6 +1102,8 @@ void nes_audio_close()
 // using OpenAL
 void nes_audio_play()
 {
+	if (openal_enable == 0) return;
+
 	for (int i=0; i<1024; i++) openal_data[i] = audio_buffer[i];
 
 	alGenBuffers(1, &openal_buffer);
@@ -1118,6 +1122,8 @@ void nes_audio_play()
 
 void nes_audio_insert(unsigned char sample)
 {
+	if (openal_enable == 0) return;
+
 	audio_buffer[(audio_write)%AUDIO_LEN] = sample + 0x80; // signed
 	
 	audio_write = audio_write + 1;
@@ -3341,6 +3347,8 @@ unsigned long cpu_run()
 
 void nes_border()
 {	
+	if (nes_border_method == 0) return;
+
 	unsigned short pixel_color = nes_palette[(pal_ram[0x00]&0x3F)];
 	
 	if (nes_border_shrink > 0)
@@ -3434,13 +3442,8 @@ void nes_background(unsigned long tile, unsigned long line)
 	
 	if (ppu_flag_eb > 0)
 	{
-		//if (map_number == 0x0004) // mmc3
-		//{
-		//	nes_mmc3_irq_toggle(ppu_flag_b);
-		//}
-		
 		if (line >= 0 && line < 240 && tile >= 0 && tile < 33)
-		{	
+		{
 			if (nes_border_shrink >= 1 && (line < 8 || line >= 232)) return;
 			
 			if (nes_border_shrink >= 2 && (tile < 1 || tile >= 31)) return;
@@ -3456,7 +3459,7 @@ void nes_background(unsigned long tile, unsigned long line)
 			scroll_l = (ppu_reg_v & 0x0FFF);
 			
 			add_l = 0x1000*ppu_flag_b + ((ppu_reg_v & 0x7000)>>12);	
-			
+
 			if (ppu_status_m == 0x0001) // horizontal scrolling
 			{
 				if (scroll_t < 0x0800)
@@ -3495,7 +3498,7 @@ void nes_background(unsigned long tile, unsigned long line)
 			{
 				pixel_table = (ppu_ram[((scroll_t&0x03FF)+0x0400)]>>add_t);
 			}
-			
+	
 			if (ppu_status_m == 0x0001) // horizontal scrolling
 			{
 				if (scroll_l < 0x0800)
@@ -3534,7 +3537,7 @@ void nes_background(unsigned long tile, unsigned long line)
 			{
 				pixel_lookup = (ppu_ram[((scroll_l&0x03FF)+0x0400)]<<4)+add_l;
 			}
-			
+
 			if ((unsigned char)cart_header[5] > 0)
 			{
 				if (map_number == 1) // mmc1
@@ -3702,19 +3705,40 @@ void nes_background(unsigned long tile, unsigned long line)
 				{
 					pixel_x = tile * 8 + i - (ppu_reg_x & 0x07);
 
-					if (pixel_x >= 0 && pixel_x < 256)
+					if ((pixel_x >= 8 && pixel_x < 256) || (pixel_x >= 0 && pixel_x < 8 && ppu_flag_lb > 0))
 					{
-						if (ppu_flag_lb > 0 || tile*8+i >= 8) // or use 0???
+						if (ppu_flag_g > 0)
 						{
-							if (ppu_flag_g > 0)
-							{
-								nes_pixel_pal(pixel_x, pixel_y, (pal_ram[(((pixel_table&0x03)<<2)+pixel_color)]&0x30));
-							}
-							else
-							{
-								nes_pixel_pal(pixel_x, pixel_y, pal_ram[(((pixel_table&0x03)<<2)+pixel_color)]);
-							}
+							nes_pixel_pal(pixel_x, pixel_y, (pal_ram[(((pixel_table&0x03)<<2)+pixel_color)]&0x30));
 						}
+						else
+						{
+							nes_pixel_pal(pixel_x, pixel_y, pal_ram[(((pixel_table&0x03)<<2)+pixel_color)]);
+						}
+					}
+					else if (pixel_x >= 0 && pixel_x < 8)
+					{
+						nes_pixel_raw(pixel_x, pixel_y, nes_palette[0x0F]); // black
+					}
+				}
+				else if (nes_border_method == 0)
+				{
+					pixel_x = tile * 8 + i - (ppu_reg_x & 0x07);
+
+					if ((pixel_x >= 8 && pixel_x < 256) || (pixel_x >= 0 && pixel_x < 8 && ppu_flag_lb > 0))
+					{
+						if (ppu_flag_g > 0)
+						{
+							nes_pixel_raw(pixel_x, pixel_y, nes_palette[(pal_ram[0x00]&0x30)]);
+						}
+						else
+						{
+							nes_pixel_raw(pixel_x, pixel_y, nes_palette[(pal_ram[0x00]&0x3F)]);
+						}
+					}
+					else if (pixel_x >= 0 && pixel_x < 8)
+					{
+						nes_pixel_raw(pixel_x, pixel_y, nes_palette[0x0F]); // black
 					}
 				}
 
@@ -5304,7 +5328,7 @@ void nes_loop()
 	}
 	
 	cpu_current_cycles = 0;
-	
+
 	if (nes_loop_halt == 0)
 	{
 		cpu_current_cycles += cpu_run();
@@ -5372,7 +5396,7 @@ void nes_loop()
 	}
 
 	ppu_tile_cycles += ((cpu_current_cycles<<1)+cpu_current_cycles);
-	
+
 	while (ppu_tile_cycles >= 8 && ppu_tile_count < 33) // 8 dots per tile
 	{		
 		ppu_tile_cycles -= 8;
@@ -5386,7 +5410,7 @@ void nes_loop()
 					nes_mmc3_irq_toggle(ppu_flag_b); // this is a speed hack
 				}
 			}
-			
+
 			nes_background(ppu_tile_count, ppu_scanline_count);
 			
 			if (ppu_flag_eb > 0)
@@ -5397,7 +5421,7 @@ void nes_loop()
 
 		ppu_tile_count++;
 	}
-	
+
 	ppu_scanline_cycles += ((cpu_current_cycles<<1)+cpu_current_cycles);
 	
 	if (ppu_scanline_cycles >= 341) // 113.667 cycles per scanline
@@ -5543,6 +5567,7 @@ void nes_loop()
 	{	
 		if (ppu_status_v == 0x0001)
 		{
+
 			nes_sprite_0_calc();
 
 			nes_border();
@@ -5834,6 +5859,12 @@ int main(const int argc, const char **argv)
 			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_5] == 1) { map_mmc3_irq_delay = 0x0000; map_mmc3_irq_shift = 0x0000; }
 			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_6] == 1) { map_mmc3_irq_delay = 0x0010; map_mmc3_irq_shift = 0x0001; }
 			if (opengl_keyboard_state[GLFW_KEY_H] == 1 && opengl_keyboard_state[GLFW_KEY_7] == 1) { map_mmc3_irq_delay = 0x0028; map_mmc3_irq_shift = 0x0003; }
+
+			if (opengl_keyboard_state[GLFW_KEY_B] == 1 && opengl_keyboard_state[GLFW_KEY_1] == 1) { nes_border_method = 0; }
+			if (opengl_keyboard_state[GLFW_KEY_B] == 1 && opengl_keyboard_state[GLFW_KEY_2] == 1) { nes_border_method = 1; }
+
+			if (opengl_keyboard_state[GLFW_KEY_M] == 1 && opengl_keyboard_state[GLFW_KEY_1] == 1) { openal_enable = 0; }
+			if (opengl_keyboard_state[GLFW_KEY_M] == 1 && opengl_keyboard_state[GLFW_KEY_2] == 1) { openal_enable = 1; }			
 		}
 	}
 
